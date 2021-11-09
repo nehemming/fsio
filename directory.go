@@ -75,6 +75,17 @@ func CreateFileDirectory(filename string, dirMode os.FileMode) error {
 	return os.MkdirAll(dir, dirMode)
 }
 
+// Chdir changes the current working directory to the named directory.
+// Directory paths starting with ~ will be expanded relative to the home folder.
+func Chdir(dir string) error {
+	path, err := ExpandFilePath(dir)
+	if err != nil {
+		return err
+	}
+
+	return os.Chdir(path)
+}
+
 // WriteFileToPath writes a file to the filename specified.
 // Function expand the path (including ~ substitution) and creates
 // as necessary the parent directoried.

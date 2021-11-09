@@ -102,6 +102,27 @@ func TestCreateFileDirectory(t *testing.T) {
 	}
 }
 
+func TestChDir(t *testing.T) {
+	home := SetHome()
+	defer ResetHome()
+
+	err := Chdir("~")
+	if err != nil {
+		t.Error("unexpected", err)
+		return
+	}
+
+	dir, err := os.Getwd()
+	if err != nil {
+		t.Error("test fail", err)
+		return
+	}
+
+	if dir != home {
+		t.Error("dir mismatch", dir, home)
+	}
+}
+
 func TestReadWriteFileToPath(t *testing.T) {
 	_ = SetHome()
 	defer ResetHome()
